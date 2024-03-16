@@ -44,8 +44,74 @@ import { HabitStore } from '../shared/data-access/habit.store';
           />
         </div>
 
-        <app-icon-radio icon="code" name="icon" formControlName="icon" />
-        <app-icon-radio icon="add" name="icon" formControlName="icon" />
+        <span class="text-sm font-medium">Icon</span>
+        <div class="grid grid-cols-12 gap-3">
+          <app-icon-radio icon="code" name="icon" formControlName="icon" />
+          <app-icon-radio
+            icon="cardiology"
+            name="icon"
+            formControlName="icon"
+          />
+          <app-icon-radio
+            icon="water_drop"
+            name="icon"
+            formControlName="icon"
+          />
+          <app-icon-radio icon="mood" name="icon" formControlName="icon" />
+          <app-icon-radio icon="group" name="icon" formControlName="icon" />
+          <app-icon-radio icon="diamond" name="icon" formControlName="icon" />
+          <app-icon-radio icon="person" name="icon" formControlName="icon" />
+
+          <app-icon-radio
+            icon="psychology"
+            name="icon"
+            formControlName="icon"
+          />
+          <app-icon-radio
+            icon="garden_cart"
+            name="icon"
+            formControlName="icon"
+          />
+          <app-icon-radio icon="nutrition" name="icon" formControlName="icon" />
+          <app-icon-radio icon="barefoot" name="icon" formControlName="icon" />
+          <app-icon-radio icon="palette" name="icon" formControlName="icon" />
+          <app-icon-radio
+            icon="fitness_center"
+            name="icon"
+            formControlName="icon"
+          />
+          <app-icon-radio icon="camera" name="icon" formControlName="icon" />
+          <app-icon-radio
+            icon="shopping_cart"
+            name="icon"
+            formControlName="icon"
+          />
+          <app-icon-radio icon="savings" name="icon" formControlName="icon" />
+          <app-icon-radio icon="ink_pen" name="icon" formControlName="icon" />
+          <app-icon-radio
+            icon="music_note"
+            name="icon"
+            formControlName="icon"
+          />
+          <app-icon-radio
+            icon="directions_bike"
+            name="icon"
+            formControlName="icon"
+          />
+          <app-icon-radio icon="school" name="icon" formControlName="icon" />
+          <app-icon-radio
+            icon="self_improvement"
+            name="icon"
+            formControlName="icon"
+          />
+          <app-icon-radio
+            icon="construction"
+            name="icon"
+            formControlName="icon"
+          />
+          <app-icon-radio icon="piano" name="icon" formControlName="icon" />
+          <app-icon-radio icon="hotel" name="icon" formControlName="icon" />
+        </div>
 
         <button
           type="submit"

@@ -10,22 +10,24 @@ import {
   standalone: true,
   selector: 'app-icon-radio',
   template: `
-    <input
-      type="radio"
-      [id]="icon()"
-      [name]="name()"
-      class="hidden peer"
-      (change)="onInputChange()"
-    />
-    <label
-      [for]="icon()"
-      class="size-12 p-2 border rounded-lg flex justify-center items-center shadow-sm hover:bg-slate-50 cursor-pointer peer-checked:border-blue-600"
-      (change)="onChange()"
-    >
-      <span class="material-symbols-outlined text-lg font-medium">
-        {{ icon() }}
-      </span>
-    </label>
+    <div class="w-fit">
+      <input
+        type="radio"
+        [id]="icon()"
+        [name]="name()"
+        class="hidden peer"
+        (change)="onInputChange()"
+      />
+      <label
+        [for]="icon()"
+        class="size-12 p-2 border rounded-lg flex justify-center items-center shadow-sm hover:bg-slate-50 cursor-pointer peer-checked:border-blue-600"
+        (change)="onChange()"
+      >
+        <span class="material-symbols-outlined text-2xl">
+          {{ icon() }}
+        </span>
+      </label>
+    </div>
   `,
   imports: [ReactiveFormsModule],
   providers: [

@@ -2,6 +2,10 @@
 module.exports = {
   content: ["./src/**/*.{html,ts}"],
   theme: {
+    fontFamily: {
+      display: ["Inter", "system-ui", "sans-serif"],
+      body: ["Inter", "system-ui", "sans-serif"],
+    },
     extend: {
       gridTemplateColumns: {
         53: "repeat(53, minmax(0, 1fr))",

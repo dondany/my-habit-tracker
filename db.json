@@ -1,0 +1,90 @@
+{
+  "habits": [
+    {
+      "id": "1",
+      "name": "Frontend Dev",
+      "description": "Learn frontend stuff for at least 30mins",
+      "icon": "code"
+    },
+    {
+      "id": "2",
+      "name": "Exercise",
+      "description": "Move around, do some push ups, stretch",
+      "icon": "fitness_center"
+    },
+    {
+      "id": "3",
+      "name": "Read",
+      "description": "Read a book for at least 30mins",
+      "icon": "menu_book"
+    }
+  ],
+  "days": [
+    {
+      "id": "1",
+      "date": "2024-01-01T00:00:00Z",
+      "completed": true,
+      "habitId": "1"
+    },
+    {
+      "id": "2",
+      "date": "2024-01-02T00:00:00Z",
+      "completed": true,
+      "habitId": "1"
+    },
+    {
+      "id": "3",
+      "date": "2024-01-04T00:00:00Z",
+      "completed": true,
+      "habitId": "1"
+    },
+    {
+      "id": "4",
+      "date": "2024-02-04T00:00:00Z",
+      "completed": true,
+      "habitId": "1"
+    },
+    {
+      "id": "5",
+      "date": "2024-02-05T00:00:00Z",
+      "completed": true,
+      "habitId": "1"
+    },
+    {
+      "id": "4xc2",
+      "date": "2024-03-11T00:00:00Z",
+      "completed": true,
+      "habitId": "2"
+    },
+    {
+      "id": "4cx1",
+      "date": "2024-03-12T00:00:00Z",
+      "completed": true,
+      "habitId": "2"
+    },
+    {
+      "id": "41cx",
+      "date": "2024-03-13T00:00:00.000Z",
+      "completed": true,
+      "habitId": "2"
+    },
+    {
+      "id": "1193",
+      "date": "2024-03-14T00:00:00.000Z",
+      "completed": true,
+      "habitId": "1"
+    },
+    {
+      "id": "87b2",
+      "date": "2024-03-14T00:00:00.000Z",
+      "completed": true,
+      "habitId": "2"
+    },
+    {
+      "id": "6586",
+      "date": "2024-03-14T00:00:00.000Z",
+      "completed": true,
+      "habitId": "3"
+    }
+  ]
+}

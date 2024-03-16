@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { of, pipe, switchMap, tap } from 'rxjs';
-import { Habit, ToggleHabit } from '../../shared/model/habit';
+import { Habit, ToggleHabit } from '../model/habit';
 import { HabitService } from './habit.service';
 
 export interface HabitState {
@@ -28,6 +28,13 @@ export const HabitStore = signalStore(
       ),
       initHabits: rxMethod<number>(
         pipe(
+          switchMap((year) => habitService.getHabits()),
+          tap((habits) => patchState(store, { habits }))
+        )
+      ),
+      addHabit: rxMethod<Habit>(
+        pipe(
+          switchMap((habit) => habitService.addHabit(habit)),
           switchMap((year) => habitService.getHabits()),
           tap((habits) => patchState(store, { habits }))
         )

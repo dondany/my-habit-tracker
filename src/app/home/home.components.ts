@@ -1,16 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, computed, inject } from '@angular/core';
 import { HabitCalendarComponent } from './ui/habit-calendar.component';
-import { HabitStore } from './data-access/habit.store';
+import { HabitStore } from '../shared/data-access/habit.store';
 import { Habit } from '../shared/model/habit';
 
 @Component({
   standalone: true,
   selector: 'app-home',
   template: `
-    <div class="flex flex-col items-center mt-4 gap-4 font-display">
+    <div class="w-full flex flex-col items-center gap-3">
       <h1 class="text-2xl tracking-tight font-semibold">My Habit Tracker</h1>
-      <div class="flex flex-col gap-3">
+      <div class="w-full flex flex-col gap-3">
         @for (habit of habitStore.habits(); track $index) {
         <app-habit-calendar
           [habit]="habit"

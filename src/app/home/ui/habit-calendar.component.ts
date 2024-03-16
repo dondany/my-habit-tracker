@@ -12,7 +12,9 @@ import { Habit } from '../../shared/model/habit';
   standalone: true,
   selector: 'app-habit-calendar',
   template: `
-    <div class="p-4 flex flex-col gap-3 border rounded-xl bg-white shadow-sm">
+    <div
+      class="w-full p-4 flex flex-col gap-3 border rounded-xl bg-white shadow-sm"
+    >
       <div class="flex justify-start items-center gap-3">
         <div
           class="size-12 flex justify-center items-center text-white bg-slate-900 rounded-lg"
@@ -37,9 +39,9 @@ import { Habit } from '../../shared/model/habit';
       </div>
       <div class="grid grid-rows-7 grid-flow-col gap-[1px]">
         @for(i of [].constructor(startDate().getDay()-1); track $index) {
-        <div class="size-[10px] rounded"></div>
+        <div class="size-[12px] rounded"></div>
         } @for(day of daysToDisplay(); track $index) {
-        <div class="size-[10px] rounded" [ngClass]="clazz(day)"></div>
+        <div class="size-[12px] rounded" [ngClass]="clazz(day)"></div>
         }
       </div>
     </div>

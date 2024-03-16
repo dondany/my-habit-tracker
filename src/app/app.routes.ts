@@ -6,6 +6,10 @@ export const routes: Routes = [
     loadChildren: () => import('./home/home.routes').then((m) => m.HOME_ROUTES),
   },
   {
+    path: 'new-habit',
+    loadComponent: () => import('./new-habit/new-habit.component'),
+  },
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',

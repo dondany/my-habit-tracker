@@ -17,6 +17,20 @@
       "name": "Read",
       "description": "Read a book for at least 30mins",
       "icon": "menu_book"
+    },
+    {
+      "id": "ac9c",
+      "name": "123",
+      "description": "123",
+      "icon": "add",
+      "days": []
+    },
+    {
+      "id": "1900",
+      "name": "44",
+      "description": "55",
+      "icon": "code",
+      "days": []
     }
   ],
   "days": [
@@ -69,20 +83,38 @@
       "habitId": "2"
     },
     {
-      "id": "1193",
+      "id": "65e4",
       "date": "2024-03-14T00:00:00.000Z",
       "completed": true,
       "habitId": "1"
     },
     {
-      "id": "87b2",
+      "id": "ea52",
       "date": "2024-03-14T00:00:00.000Z",
       "completed": true,
       "habitId": "2"
     },
     {
-      "id": "6586",
+      "id": "c5b7",
       "date": "2024-03-14T00:00:00.000Z",
+      "completed": true,
+      "habitId": "3"
+    },
+    {
+      "id": "e458",
+      "date": "2024-03-15T00:00:00.000Z",
+      "completed": true,
+      "habitId": "1"
+    },
+    {
+      "id": "c4fd",
+      "date": "2024-03-15T00:00:00.000Z",
+      "completed": true,
+      "habitId": "2"
+    },
+    {
+      "id": "44bd",
+      "date": "2024-03-15T00:00:00.000Z",
       "completed": true,
       "habitId": "3"
     }

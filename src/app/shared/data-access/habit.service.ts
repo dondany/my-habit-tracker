@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Habit } from '../../shared/model/habit';
+import { Habit } from '../model/habit';
 import { map, tap } from 'rxjs';
-import { Day } from '../../shared/model/day';
+import { Day } from '../model/day';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +14,10 @@ export class HabitService {
 
   getHabits() {
     return this.http.get<Habit[]>(`${this.BASE_URL}/habits?_embed=days`);
+  }
+
+  addHabit(habit: Habit) {
+    return this.http.post<Habit>(`${this.BASE_URL}/habits`, habit);
   }
 
   addDay(habitId: string, date: Date) {

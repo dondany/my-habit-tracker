@@ -3,13 +3,27 @@ import { Component, OnInit, computed, inject } from '@angular/core';
 import { HabitCalendarComponent } from './ui/habit-calendar.component';
 import { HabitStore } from '../shared/data-access/habit.store';
 import { Habit } from '../shared/model/habit';
+import { RouterLink } from '@angular/router';
 
 @Component({
   standalone: true,
   selector: 'app-home',
   template: `
     <div class="w-full flex flex-col items-center gap-3">
-      <h1 class="text-2xl tracking-tight font-semibold">My Habit Tracker</h1>
+      <div class="w-full flex justify-between items-center">
+        <button
+          class="p-2 flex items-center justify-center rounded-lg hover:bg-slate-200"
+        >
+          <span class="material-symbols-outlined text-slate-900"> menu </span>
+        </button>
+        <h1 class="text-2xl tracking-tight font-semibold">My Habit Tracker</h1>
+        <button
+          class="p-2 flex items-center justify-center rounded-lg hover:bg-slate-200"
+          routerLink="/new-habit"
+        >
+          <span class="material-symbols-outlined text-slate-900"> add </span>
+        </button>
+      </div>
       <div class="w-full flex flex-col gap-3">
         @for (habit of habitStore.habits(); track $index) {
         <app-habit-calendar
@@ -22,7 +36,7 @@ import { Habit } from '../shared/model/habit';
       </div>
     </div>
   `,
-  imports: [CommonModule, HabitCalendarComponent],
+  imports: [CommonModule, HabitCalendarComponent, RouterLink],
 })
 export default class HomeComponent implements OnInit {
   habitStore = inject(HabitStore);

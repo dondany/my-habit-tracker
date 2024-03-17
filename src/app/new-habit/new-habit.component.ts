@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { IconRadioComponent } from './ui/icon-radio.component';
 import {
   FormBuilder,
@@ -8,12 +8,24 @@ import {
 } from '@angular/forms';
 import { Habit } from '../shared/model/habit';
 import { HabitStore } from '../shared/data-access/habit.store';
+import { RouterLink } from '@angular/router';
 
 @Component({
   standalone: true,
   selector: 'app-new-habit',
   template: `<div class="w-full flex flex-col items-center gap-3 ">
-    <h1 class="text-2xl tracking-tight font-semibold">New Habit</h1>
+    <div class="w-full flex justify-between items-center">
+      <button
+        class="p-2 flex items-center justify-center rounded-lg hover:bg-slate-200"
+        routerLink=".."
+      >
+        <span class="material-symbols-outlined text-slate-900">
+          arrow_back
+        </span>
+      </button>
+      <h1 class="text-2xl tracking-tight font-semibold">New Habit</h1>
+      <span class="size-6"></span>
+    </div>
     <div
       class="w-full p-4 flex flex-col gap-3 border rounded-xl bg-white shadow-sm"
     >
@@ -115,14 +127,19 @@ import { HabitStore } from '../shared/data-access/habit.store';
 
         <button
           type="submit"
-          class="ml-auto px-4 py-2 bg-slate-900 text-white font-medium rounded-lg tracking-tight flex items-center gap-1"
+          class="ml-auto px-4 py-2  bg-slate-900 text-white font-medium rounded-lg tracking-tight flex items-center gap-2"
         >
+          @if (habitStore.saving()) {
+          <span class="material-symbols-outlined animate-spin opacity-80">
+            progress_activity
+          </span>
+          }
           <span>Save</span>
         </button>
       </form>
     </div>
   </div>`,
-  imports: [IconRadioComponent, ReactiveFormsModule],
+  imports: [IconRadioComponent, ReactiveFormsModule, RouterLink],
 })
 export default class NewHabitComponent {
   habitStore = inject(HabitStore);

@@ -1,5 +1,7 @@
 import { Component, effect, inject } from '@angular/core';
 import { IconRadioComponent } from './ui/icon-radio.component';
+import { ColorRadioComponent } from './ui/color-radio-component';
+
 import {
   FormBuilder,
   FormControl,
@@ -125,6 +127,38 @@ import { RouterLink } from '@angular/router';
           <app-icon-radio icon="hotel" name="icon" formControlName="icon" />
         </div>
 
+        <span class="text-sm font-medium">Color</span>
+        <div class="grid grid-cols-12 gap-3">
+          <app-color-radio name="color" color="red" formControlName="color" />
+          <app-color-radio name="color" color="blue" formControlName="color" />
+          <app-color-radio name="color" color="green" formControlName="color" />
+          <app-color-radio name="color" color="pink" formControlName="color" />
+          <app-color-radio
+            name="color"
+            color="yellow"
+            formCOntrolName="color"
+          />
+          <app-color-radio
+            name="color"
+            color="indigo"
+            formControlName="color"
+          />
+          <app-color-radio name="color" color="slate" formControlName="color" />
+          <app-color-radio
+            name="color"
+            color="orange"
+            formControlName="color"
+          />
+          <app-color-radio name="color" color="lime" formControlName="color" />
+          <app-color-radio
+            name="color"
+            color="purple"
+            formControlName="color"
+          />
+          <app-color-radio name="color" color="teal" formControlName="color" />
+          <app-color-radio name="color" color="zinc" formControlName="color" />
+        </div>
+
         <button
           type="submit"
           class="ml-auto px-4 py-2  bg-slate-900 text-white font-medium rounded-lg tracking-tight flex items-center gap-2"
@@ -139,7 +173,12 @@ import { RouterLink } from '@angular/router';
       </form>
     </div>
   </div>`,
-  imports: [IconRadioComponent, ReactiveFormsModule, RouterLink],
+  imports: [
+    IconRadioComponent,
+    ColorRadioComponent,
+    ReactiveFormsModule,
+    RouterLink,
+  ],
 })
 export default class NewHabitComponent {
   habitStore = inject(HabitStore);
@@ -148,6 +187,7 @@ export default class NewHabitComponent {
     name: new FormControl('', Validators.required),
     description: new FormControl(''),
     icon: new FormControl(''),
+    color: new FormControl(''),
   });
 
   onSubmit() {
@@ -156,6 +196,7 @@ export default class NewHabitComponent {
       description: this.form.getRawValue().description!,
       icon: this.form.getRawValue().icon!,
       days: [],
+      color: this.form.getRawValue().color!,
     };
     this.habitStore.addHabit(habit);
   }

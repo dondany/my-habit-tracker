@@ -17,7 +17,8 @@ import { Habit } from '../../shared/model/habit';
     >
       <div class="flex justify-start items-center gap-3">
         <div
-          class="size-12 flex justify-center items-center text-white bg-slate-900 rounded-lg"
+          class="size-12 flex justify-center items-center rounded-lg"
+          [ngClass]="colorClass()"
         >
           <span class="material-symbols-outlined">{{ habit().icon }}</span>
         </div>
@@ -28,7 +29,7 @@ import { Habit } from '../../shared/model/habit';
         <button
           (click)="toggle.emit()"
           class="ml-auto size-12 flex items-center justify-center gap-1 tracking-tight font-medium rounded-lg border transition duration-150"
-          [ngClass]="todayChecked() ? 'bg-slate-900 text-white' : 'bg-white'"
+          [ngClass]="todayChecked() ? colorClass() : 'bg-white'"
         >
           @if (todayChecked()) {
           <span class="material-symbols-outlined text-lg font-semibold">
@@ -71,7 +72,7 @@ export class HabitCalendarComponent {
       return d.date.getTime() === date.getTime() && d.completed;
     });
 
-    return completed ? 'bg-slate-900' : 'bg-slate-200';
+    return completed ? this.colorClass() : 'bg-slate-200';
   }
 
   isToday(date: Date) {
@@ -81,5 +82,23 @@ export class HabitCalendarComponent {
       date.getUTCMonth() == today.getUTCMonth() &&
       date.getUTCDate() == today.getUTCDate()
     );
+  }
+
+  colorClass() {
+    return {
+      'bg-red-400': this.habit().color === 'red',
+      'bg-blue-400': this.habit().color === 'blue',
+      'bg-green-400': this.habit().color === 'green',
+      'bg-pink-400': this.habit().color === 'pink',
+      'bg-yellow-400': this.habit().color === 'yellow',
+      'bg-indigo-400': this.habit().color === 'indigo',
+      'bg-slate-900': this.habit().color === 'slate' || !this.habit().color,
+      'bg-orange-400': this.habit().color === 'orange',
+      'bg-lime-400': this.habit().color === 'lime',
+      'bg-purple-400': this.habit().color === 'purple',
+      'bg-zinc-400': this.habit().color === 'zinc',
+      'bg-teal-400': this.habit().color === 'teal',
+      'text-white': true,
+    };
   }
 }

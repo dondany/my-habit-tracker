@@ -5,6 +5,7 @@ export interface Habit {
   icon?: string;
   name?: string;
   description?: string;
+  color?: string;
   days: Day[];
 }
 

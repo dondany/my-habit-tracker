@@ -31,6 +31,7 @@ import { RouterLink } from '@angular/router';
           [daysToDisplay]="habitStore.daysToDisplay()"
           [startDate]="startDate"
           (toggle)="onToggle(habit)"
+          (delete)="onDelete(habit.id!)"
         />
         }
       </div>
@@ -60,5 +61,9 @@ export default class HomeComponent implements OnInit {
     } else {
       this.habitStore.addDay({ id: habit.id!, date: today });
     }
+  }
+
+  onDelete(id: string) {
+    this.habitStore.deleteHabit(id);
   }
 }

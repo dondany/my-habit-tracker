@@ -20,6 +20,10 @@ export class HabitService {
     return this.http.post<Habit>(`${this.BASE_URL}/habits`, habit);
   }
 
+  deleteHabit(id: string) {
+    return this.http.delete(`${this.BASE_URL}/habits/${id}`);
+  }
+
   addDay(habitId: string, date: Date) {
     return this.http.post<Day>(`${this.BASE_URL}/days`, {
       date,

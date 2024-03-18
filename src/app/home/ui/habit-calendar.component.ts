@@ -45,6 +45,11 @@ import { Habit } from '../../shared/model/habit';
         <div class="size-[12px] rounded" [ngClass]="clazz(day)"></div>
         }
       </div>
+      <button (click)="delete.emit()">
+        <span class="material-symbols-outlined text-lg font-semibold">
+          delete
+        </span>
+      </button>
     </div>
   `,
   imports: [CommonModule],
@@ -55,6 +60,7 @@ export class HabitCalendarComponent {
   startDate = input.required<Date>();
 
   @Output() toggle: EventEmitter<void> = new EventEmitter();
+  @Output() delete: EventEmitter<void> = new EventEmitter();
 
   firstDay = computed(() =>
     new Date(this.startDate().getFullYear(), 0, 1).getDay()

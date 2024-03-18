@@ -46,6 +46,13 @@ export const HabitStore = signalStore(
             tap(() => router.navigate(['/home']))
           )
         ),
+        deleteHabit: rxMethod<string>(
+          pipe(
+            switchMap((id) => habitService.deleteHabit(id)),
+            switchMap((year) => habitService.getHabits()),
+            tap((habits) => patchState(store, { habits, loading: false }))
+          )
+        ),
         addDay: rxMethod<ToggleHabit>(
           pipe(
             switchMap((update) => habitService.addDay(update.id, update.date)),

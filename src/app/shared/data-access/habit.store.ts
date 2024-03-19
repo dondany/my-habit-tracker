@@ -54,7 +54,7 @@ export const HabitStore = signalStore(
             tap(() => patchState(store, { saving: false, loading: true })),
             switchMap((year) => habitService.getHabits()),
             tap((habits) => patchState(store, { habits, loading: false })),
-            tap(() => router.navigate(['/home']))
+            tap(() => router.navigate(['/habit']))
           )
         ),
         deleteHabit: rxMethod<string>(

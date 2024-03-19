@@ -16,6 +16,7 @@ import {
         [name]="name()"
         class="hidden peer"
         (change)="onInputChange()"
+        [checked]="isChecked"
       />
       <label
         [for]="icon()"
@@ -42,8 +43,11 @@ export class IconRadioComponent implements ControlValueAccessor {
   name = input.required<string>();
   onChange: any = () => {};
   onTouched: any = () => {};
+  isChecked: boolean = true;
 
-  writeValue(value: any): void {}
+  writeValue(value: any): void {
+    this.isChecked = value === this.icon();
+  }
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
@@ -51,6 +55,7 @@ export class IconRadioComponent implements ControlValueAccessor {
     this.onTouched = fn;
   }
   onInputChange(): void {
+    this.isChecked = true;
     this.onChange(this.icon());
     this.onTouched();
   }

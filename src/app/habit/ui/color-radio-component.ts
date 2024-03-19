@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, forwardRef, input } from '@angular/core';
+import { Component, effect, forwardRef, input } from '@angular/core';
 import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
@@ -17,6 +17,7 @@ import {
         [name]="name()"
         class="hidden peer"
         (change)="onInputChange()"
+        [checked]="isChecked"
       />
       <label
         [for]="color()"
@@ -40,12 +41,15 @@ import {
   ],
 })
 export class ColorRadioComponent implements ControlValueAccessor {
-  color = input<string>('slate');
+  color = input.required<string>();
   name = input.required<string>();
   onChange: any = () => {};
   onTouched: any = () => {};
+  isChecked: boolean = true;
 
-  writeValue(value: any): void {}
+  writeValue(value: any): void {
+    this.isChecked = value === this.color();
+  }
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
@@ -53,6 +57,7 @@ export class ColorRadioComponent implements ControlValueAccessor {
     this.onTouched = fn;
   }
   onInputChange(): void {
+    this.isChecked = true;
     this.onChange(this.color());
     this.onTouched();
   }

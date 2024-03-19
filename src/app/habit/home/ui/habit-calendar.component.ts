@@ -6,7 +6,7 @@ import {
   computed,
   input,
 } from '@angular/core';
-import { Habit } from '../../shared/model/habit';
+import { Habit } from '../../../shared/model/habit';
 
 @Component({
   standalone: true,
@@ -14,6 +14,7 @@ import { Habit } from '../../shared/model/habit';
   template: `
     <div
       class="w-full p-4 flex flex-col gap-3 border rounded-xl bg-white shadow-sm"
+      (click)="isOpened = !isOpened"
     >
       <div class="flex justify-start items-center gap-3">
         <div
@@ -45,11 +46,22 @@ import { Habit } from '../../shared/model/habit';
         <div class="size-[12px] rounded" [ngClass]="clazz(day)"></div>
         }
       </div>
-      <button (click)="delete.emit()">
-        <span class="material-symbols-outlined text-lg font-semibold">
-          delete
-        </span>
-      </button>
+      @if(isOpened) {
+      <div class="w-full flex gap-2 border-t py-2 justify-end">
+        <button
+          (click)="edit.emit()"
+          class="px-2 py-1 bg-slate-100 hover:bg-slate-200 font-thin flex items-center justify-center rounded-lg"
+        >
+          <span class="material-symbols-outlined text-lg"> edit </span>
+        </button>
+        <button
+          (click)="delete.emit()"
+          class="px-2 py-1 bg-slate-100 hover:bg-slate-200 font-thin flex items-center justify-center rounded-lg"
+        >
+          <span class="material-symbols-outlined text-lg"> delete </span>
+        </button>
+      </div>
+      }
     </div>
   `,
   imports: [CommonModule],
@@ -61,6 +73,7 @@ export class HabitCalendarComponent {
 
   @Output() toggle: EventEmitter<void> = new EventEmitter();
   @Output() delete: EventEmitter<void> = new EventEmitter();
+  @Output() edit: EventEmitter<void> = new EventEmitter();
 
   firstDay = computed(() =>
     new Date(this.startDate().getFullYear(), 0, 1).getDay()
@@ -69,6 +82,8 @@ export class HabitCalendarComponent {
     this.habit().days.some((d) => this.isToday(d.date))
   );
   days = computed(() => (this.habit().days ? this.habit().days : []));
+
+  isOpened = true;
 
   clazz(date: Date | null) {
     if (!date) {

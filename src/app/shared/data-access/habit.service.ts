@@ -16,6 +16,10 @@ export class HabitService {
     return this.http.get<Habit[]>(`${this.BASE_URL}/habits?_embed=days`);
   }
 
+  getHabit(id: string) {
+    return this.http.get<Habit>(`${this.BASE_URL}/habits/${id}?_embed=days`);
+  }
+
   addHabit(habit: Habit) {
     return this.http.post<Habit>(`${this.BASE_URL}/habits`, habit);
   }

@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 
 export interface HabitState {
   habits: Habit[];
+  openedHabit: Habit | null;
   daysToDisplay: Date[];
   loading: boolean;
   saving: boolean;
@@ -17,6 +18,7 @@ export const HabitStore = signalStore(
   { providedIn: 'root' },
   withState<HabitState>({
     habits: [],
+    openedHabit: null,
     daysToDisplay: [],
     loading: false,
     saving: false,
@@ -34,6 +36,15 @@ export const HabitStore = signalStore(
           pipe(
             switchMap((year) => habitService.getHabits()),
             tap((habits) => patchState(store, { habits }))
+          )
+        ),
+        openHabit: rxMethod<string>(
+          pipe(
+            tap(() => patchState(store, { loading: true })),
+            switchMap((id) => habitService.getHabit(id)),
+            tap((habit) =>
+              patchState(store, { openedHabit: habit, loading: false })
+            )
           )
         ),
         addHabit: rxMethod<Habit>(

@@ -2,16 +2,13 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.routes').then((m) => m.HOME_ROUTES),
-  },
-  {
-    path: 'new-habit',
-    loadComponent: () => import('./new-habit/new-habit.component'),
+    path: 'habit',
+    loadChildren: () =>
+      import('./habit/habit.routes').then((m) => m.HABIT_ROUTES),
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'habit',
     pathMatch: 'full',
   },
 ];

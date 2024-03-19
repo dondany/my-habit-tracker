@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, computed, inject } from '@angular/core';
 import { HabitCalendarComponent } from './ui/habit-calendar.component';
-import { HabitStore } from '../shared/data-access/habit.store';
-import { Habit } from '../shared/model/habit';
-import { RouterLink } from '@angular/router';
+import { HabitStore } from '../../shared/data-access/habit.store';
+import { Habit } from '../../shared/model/habit';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -19,7 +19,7 @@ import { RouterLink } from '@angular/router';
         <h1 class="text-2xl tracking-tight font-semibold">My Habit Tracker</h1>
         <button
           class="p-2 flex items-center justify-center rounded-lg hover:bg-slate-200"
-          routerLink="/new-habit"
+          routerLink="new-habit"
         >
           <span class="material-symbols-outlined text-slate-900"> add </span>
         </button>
@@ -32,6 +32,7 @@ import { RouterLink } from '@angular/router';
           [startDate]="startDate"
           (toggle)="onToggle(habit)"
           (delete)="onDelete(habit.id!)"
+          (edit)="router.navigate([habit.id], { relativeTo: route })"
         />
         }
       </div>
@@ -41,6 +42,8 @@ import { RouterLink } from '@angular/router';
 })
 export default class HomeComponent implements OnInit {
   habitStore = inject(HabitStore);
+  router = inject(Router);
+  route = inject(ActivatedRoute);
   startDate = new Date(2024, 0, 1);
 
   ngOnInit(): void {

@@ -13,8 +13,8 @@ import { Habit } from '../../../shared/model/habit';
   selector: 'app-habit-calendar',
   template: `
     <div
-      class="w-full p-4 flex flex-col gap-3 border rounded-xl bg-white shadow-sm"
-      (click)="isOpened = !isOpened"
+      class="w-full p-4 flex flex-col gap-3 border rounded-xl bg-white shadow-sm cursor-pointer"
+      (click)="expand.emit()"
     >
       <div class="flex justify-start items-center gap-3">
         <div
@@ -28,7 +28,7 @@ import { Habit } from '../../../shared/model/habit';
           <span class="text-sm">{{ habit().description }}</span>
         </div>
         <button
-          (click)="toggle.emit()"
+          (click)="toggle.emit(); $event.stopPropagation()"
           class="ml-auto size-12 flex items-center justify-center gap-1 tracking-tight font-medium rounded-lg border transition duration-150"
           [ngClass]="todayChecked() ? colorClass() : 'bg-white'"
         >
@@ -46,16 +46,16 @@ import { Habit } from '../../../shared/model/habit';
         <div class="size-[12px] rounded" [ngClass]="clazz(day)"></div>
         }
       </div>
-      @if(isOpened) {
+      @if(isExpanded()) {
       <div class="w-full flex gap-2 border-t py-2 justify-end">
         <button
-          (click)="edit.emit()"
+          (click)="edit.emit(); $event.stopPropagation()"
           class="px-2 py-1 bg-slate-100 hover:bg-slate-200 font-thin flex items-center justify-center rounded-lg"
         >
           <span class="material-symbols-outlined text-lg"> edit </span>
         </button>
         <button
-          (click)="delete.emit()"
+          (click)="delete.emit(); $event.stopPropagation()"
           class="px-2 py-1 bg-slate-100 hover:bg-slate-200 font-thin flex items-center justify-center rounded-lg"
         >
           <span class="material-symbols-outlined text-lg"> delete </span>
@@ -70,10 +70,12 @@ export class HabitCalendarComponent {
   habit = input.required<Habit>();
   daysToDisplay = input.required<Date[]>();
   startDate = input.required<Date>();
+  isExpanded = input<boolean>(false);
 
   @Output() toggle: EventEmitter<void> = new EventEmitter();
   @Output() delete: EventEmitter<void> = new EventEmitter();
   @Output() edit: EventEmitter<void> = new EventEmitter();
+  @Output() expand: EventEmitter<void> = new EventEmitter();
 
   firstDay = computed(() =>
     new Date(this.startDate().getFullYear(), 0, 1).getDay()
@@ -82,8 +84,6 @@ export class HabitCalendarComponent {
     this.habit().days.some((d) => this.isToday(d.date))
   );
   days = computed(() => (this.habit().days ? this.habit().days : []));
-
-  isOpened = true;
 
   clazz(date: Date | null) {
     if (!date) {

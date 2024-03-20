@@ -30,9 +30,11 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
           [habit]="habit"
           [daysToDisplay]="habitStore.daysToDisplay()"
           [startDate]="startDate"
+          [isExpanded]="habit.id === expandedHabitId"
           (toggle)="onToggle(habit)"
           (delete)="onDelete(habit.id!)"
           (edit)="router.navigate([habit.id], { relativeTo: route })"
+          (expand)="onExpand(habit.id!)"
         />
         }
       </div>
@@ -45,6 +47,8 @@ export default class HomeComponent implements OnInit {
   router = inject(Router);
   route = inject(ActivatedRoute);
   startDate = new Date(2024, 0, 1);
+
+  expandedHabitId: string | null = null;
 
   ngOnInit(): void {
     this.habitStore.init(2024);
@@ -68,5 +72,9 @@ export default class HomeComponent implements OnInit {
 
   onDelete(id: string) {
     this.habitStore.deleteHabit(id);
+  }
+
+  onExpand(id: string) {
+    this.expandedHabitId = this.expandedHabitId === id ? null : id;
   }
 }

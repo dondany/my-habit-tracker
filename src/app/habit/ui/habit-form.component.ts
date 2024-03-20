@@ -1,4 +1,11 @@
-import { Component, effect, inject, input } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Output,
+  effect,
+  inject,
+  input,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -121,8 +128,8 @@ import { Habit } from '../../shared/model/habit';
 })
 export class HabitFormComponent {
   habitStore = inject(HabitStore);
-
   habit = input<Habit>();
+  @Output() save = new EventEmitter<Habit>();
 
   form = inject(FormBuilder).group({
     name: new FormControl(this.habit()?.name, Validators.required),
@@ -134,7 +141,6 @@ export class HabitFormComponent {
   constructor() {
     effect(() => {
       if (!!this.habit()) {
-        console.log(this.habit());
         this.form.patchValue({
           name: this.habit()?.name,
           description: this.habit()?.description,
@@ -146,14 +152,16 @@ export class HabitFormComponent {
   }
 
   onSubmit() {
+    console.log('sub');
     const habit: Habit = {
+      id: !!this.habit() ? this.habit()!.id : undefined,
       name: this.form.getRawValue().name!,
       description: this.form.getRawValue().description!,
       icon: this.form.getRawValue().icon!,
       days: [],
       color: this.form.getRawValue().color!,
     };
-    this.habitStore.addHabit(habit);
+    this.save.emit(habit);
     this.form.reset();
   }
 }

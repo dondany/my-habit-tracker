@@ -24,7 +24,10 @@ import { RouterLink } from '@angular/router';
     >
       @if(!!habitStore.openedHabit()) {
 
-      <app-habit-form [habit]="habitStore.openedHabit()!" />
+      <app-habit-form
+        [habit]="habitStore.openedHabit()!"
+        (save)="habitStore.updateHabit($event)"
+      />
       }
     </div>
   </div>`,

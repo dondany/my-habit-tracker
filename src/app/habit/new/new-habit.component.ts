@@ -26,7 +26,7 @@ import { HabitFormComponent } from '../ui/habit-form.component';
     <div
       class="w-full p-4 flex flex-col gap-3 border rounded-xl bg-white shadow-sm"
     >
-      <app-habit-form />
+      <app-habit-form (save)="habitStore.addHabit($event)" />
     </div>
   </div>`,
   imports: [

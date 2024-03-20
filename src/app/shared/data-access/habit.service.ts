@@ -24,6 +24,10 @@ export class HabitService {
     return this.http.post<Habit>(`${this.BASE_URL}/habits`, habit);
   }
 
+  updateHabit(habit: Habit) {
+    return this.http.put<Habit>(`${this.BASE_URL}/habits/${habit.id}?`, habit);
+  }
+
   deleteHabit(id: string) {
     return this.http.delete(`${this.BASE_URL}/habits/${id}`);
   }

@@ -4,9 +4,11 @@ import {
   EventEmitter,
   Output,
   computed,
+  effect,
   input,
 } from '@angular/core';
 import { Habit } from '../../../shared/model/habit';
+import { CalendarComponent } from './calendar.component';
 
 @Component({
   standalone: true,
@@ -46,25 +48,37 @@ import { Habit } from '../../../shared/model/habit';
         <div class="size-[12px] rounded" [ngClass]="clazz(day)"></div>
         }
       </div>
-      @if(isExpanded()) {
-      <div class="w-full flex gap-2 border-t py-2 justify-end">
-        <button
-          (click)="edit.emit(); $event.stopPropagation()"
-          class="px-2 py-1 bg-slate-100 hover:bg-slate-200 font-thin flex items-center justify-center rounded-lg"
-        >
-          <span class="material-symbols-outlined text-lg"> edit </span>
-        </button>
-        <button
-          (click)="delete.emit(); $event.stopPropagation()"
-          class="px-2 py-1 bg-slate-100 hover:bg-slate-200 font-thin flex items-center justify-center rounded-lg"
-        >
-          <span class="material-symbols-outlined text-lg"> delete </span>
-        </button>
+
+      <div
+        class="w-full transition-all duration-200 overflow-hidden select-none"
+        [ngClass]="isExpanded() ? 'h-80' : 'h-0'"
+      >
+        @if(isExpanded()) {
+        <div class="flex gap-2 py-4 justify-end ">
+          <app-calendar
+            [habitDays]="habit().days"
+            class="mr-auto"
+            (toggle)="dayToggle.emit($event)"
+          />
+          <button
+            (click)="edit.emit(); $event.stopPropagation()"
+            class="size-fit px-2 py-1 bg-slate-100 hover:bg-slate-200 font-thin flex items-center justify-center rounded-lg"
+          >
+            <span class="material-symbols-outlined text-lg"> edit </span>
+          </button>
+          <button
+            (click)="delete.emit(); $event.stopPropagation()"
+            class="size-fit px-2 py-1 bg-slate-100 hover:bg-slate-200 font-thin flex items-center justify-center rounded-lg"
+          >
+            <span class="material-symbols-outlined text-lg"> delete </span>
+          </button>
+        </div>
+
+        }
       </div>
-      }
     </div>
   `,
-  imports: [CommonModule],
+  imports: [CommonModule, CalendarComponent],
 })
 export class HabitCalendarComponent {
   habit = input.required<Habit>();
@@ -72,7 +86,14 @@ export class HabitCalendarComponent {
   startDate = input.required<Date>();
   isExpanded = input<boolean>(false);
 
+  constructor() {
+    effect(() => {
+      console.log(this.daysToDisplay());
+    });
+  }
+
   @Output() toggle: EventEmitter<void> = new EventEmitter();
+  @Output() dayToggle = new EventEmitter<Date>();
   @Output() delete: EventEmitter<void> = new EventEmitter();
   @Output() edit: EventEmitter<void> = new EventEmitter();
   @Output() expand: EventEmitter<void> = new EventEmitter();
@@ -90,7 +111,12 @@ export class HabitCalendarComponent {
       return '';
     }
     const completed = this.days().some((d) => {
-      return d.date.getTime() === date.getTime() && d.completed;
+      return (
+        d.date.getFullYear() === date.getFullYear() &&
+        d.date.getMonth() === date.getMonth() &&
+        d.date.getDate() === date.getDate() &&
+        d.completed
+      );
     });
 
     return completed ? this.colorClass() : 'bg-slate-200';

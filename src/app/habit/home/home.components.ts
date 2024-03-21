@@ -32,6 +32,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
           [startDate]="startDate"
           [isExpanded]="habit.id === expandedHabitId"
           (toggle)="onToggle(habit)"
+          (dayToggle)="onDayToggle(habit, $event)"
           (delete)="onDelete(habit.id!)"
           (edit)="router.navigate([habit.id], { relativeTo: route })"
           (expand)="onExpand(habit.id!)"
@@ -48,7 +49,7 @@ export default class HomeComponent implements OnInit {
   route = inject(ActivatedRoute);
   startDate = new Date(2024, 0, 1);
 
-  expandedHabitId: string | null = null;
+  expandedHabitId: string | null = '1c13';
 
   ngOnInit(): void {
     this.habitStore.init(2024);
@@ -67,6 +68,22 @@ export default class HomeComponent implements OnInit {
       this.habitStore.deleteDay(day.id!);
     } else {
       this.habitStore.addDay({ id: habit.id!, date: today });
+    }
+  }
+
+  onDayToggle(habit: Habit, date: Date) {
+    let utcDate = new Date(
+      Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
+    );
+
+    const day = habit.days.find(
+      (day) => day.date.getTime() === utcDate.getTime()
+    );
+
+    if (!!day) {
+      this.habitStore.deleteDay(day.id!);
+    } else {
+      this.habitStore.addDay({ id: habit.id!, date: utcDate });
     }
   }
 

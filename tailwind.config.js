@@ -10,6 +10,9 @@ module.exports = {
       gridTemplateColumns: {
         53: "repeat(53, minmax(0, 1fr))",
       },
+      transitionProperty: {
+        height: "height",
+      },
     },
   },
   plugins: [],

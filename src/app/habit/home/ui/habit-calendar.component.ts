@@ -57,6 +57,7 @@ import { CalendarComponent } from './calendar.component';
         <div class="flex gap-2 py-4 justify-end ">
           <app-calendar
             [habitDays]="habit().days"
+            [color]="habit().color!"
             class="mr-auto"
             (toggle)="dayToggle.emit($event)"
           />
@@ -85,12 +86,6 @@ export class HabitCalendarComponent {
   daysToDisplay = input.required<Date[]>();
   startDate = input.required<Date>();
   isExpanded = input<boolean>(false);
-
-  constructor() {
-    effect(() => {
-      console.log(this.daysToDisplay());
-    });
-  }
 
   @Output() toggle: EventEmitter<void> = new EventEmitter();
   @Output() dayToggle = new EventEmitter<Date>();

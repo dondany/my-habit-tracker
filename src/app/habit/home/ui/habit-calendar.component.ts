@@ -15,7 +15,7 @@ import { CalendarComponent } from './calendar.component';
   selector: 'app-habit-calendar',
   template: `
     <div
-      class="w-full p-4 flex flex-col gap-3 border rounded-xl bg-white shadow-sm cursor-pointer"
+      class="w-full p-4 flex flex-col gap-3 border rounded-xl bg-white dark:bg-slate-700 dark:border-none shadow-sm cursor-pointer"
       (click)="expand.emit()"
     >
       <div class="flex justify-start items-center gap-3">
@@ -25,14 +25,18 @@ import { CalendarComponent } from './calendar.component';
         >
           <span class="material-symbols-outlined">{{ habit().icon }}</span>
         </div>
-        <div class="flex flex-col">
+        <div class="flex flex-col dark:text-slate-200">
           <span class="font-medium tracking-tight">{{ habit().name }}</span>
           <span class="text-sm">{{ habit().description }}</span>
         </div>
         <button
           (click)="toggle.emit(); $event.stopPropagation()"
-          class="ml-auto size-12 flex items-center justify-center gap-1 tracking-tight font-medium rounded-lg border transition duration-150"
-          [ngClass]="todayChecked() ? colorClass() : 'bg-white'"
+          class="ml-auto size-12 flex items-center justify-center gap-1 tracking-tight border-transparent font-medium rounded-lg transition duration-150"
+          [ngClass]="
+            todayChecked()
+              ? colorClass()
+              : 'bg-white dark:bg-transparent dark:border-white'
+          "
         >
           @if (todayChecked()) {
           <span class="material-symbols-outlined text-lg font-semibold">
@@ -54,25 +58,29 @@ import { CalendarComponent } from './calendar.component';
         [ngClass]="isExpanded() ? 'h-80' : 'h-0'"
       >
         @if(isExpanded()) {
-        <div class="flex gap-2 py-4 justify-end ">
+        <div class="flex gap-2 py-4 justify-between">
           <app-calendar
             [habitDays]="habit().days"
             [color]="habit().color!"
-            class="mr-auto"
+            class=""
             (toggle)="dayToggle.emit($event)"
           />
-          <button
-            (click)="edit.emit(); $event.stopPropagation()"
-            class="size-fit px-2 py-1 bg-slate-100 hover:bg-slate-200 font-thin flex items-center justify-center rounded-lg"
-          >
-            <span class="material-symbols-outlined text-lg"> edit </span>
-          </button>
-          <button
-            (click)="delete.emit(); $event.stopPropagation()"
-            class="size-fit px-2 py-1 bg-slate-100 hover:bg-slate-200 font-thin flex items-center justify-center rounded-lg"
-          >
-            <span class="material-symbols-outlined text-lg"> delete </span>
-          </button>
+          <div class="flex gap-2">
+            <button
+              (click)="edit.emit(); $event.stopPropagation()"
+              class="size-fit px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-600 font-thin flex items-center gap-2 rounded-lg"
+            >
+              <span class="material-symbols-outlined text-lg"> edit </span>
+              <span class="font-medium">Edit</span>
+            </button>
+            <button
+              (click)="delete.emit(); $event.stopPropagation()"
+              class="size-fit px-2 py-1 bg-red-100 hover:bg-red-200 text-slate-600 font-thin flex items-center gap-2 rounded-lg"
+            >
+              <span class="material-symbols-outlined text-lg"> delete </span>
+              <span class="font-medium">Delete</span>
+            </button>
+          </div>
         </div>
 
         }
@@ -114,7 +122,7 @@ export class HabitCalendarComponent {
       );
     });
 
-    return completed ? this.colorClass() : 'bg-slate-200';
+    return completed ? this.colorClass() : 'dark:bg-slate-800';
   }
 
   isToday(date: Date) {

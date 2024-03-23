@@ -4,6 +4,7 @@ import { HabitCalendarComponent } from './ui/habit-calendar.component';
 import { HabitStore } from '../../shared/data-access/habit.store';
 import { Habit } from '../../shared/model/habit';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ThemeService } from '../../shared/theme.service';
 
 @Component({
   standalone: true,
@@ -11,11 +12,21 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
   template: `
     <div class="w-full flex flex-col items-center gap-3">
       <div class="w-full flex justify-between items-center">
-        <button
-          class="p-2 flex items-center justify-center rounded-lg hover:bg-slate-200"
-        >
-          <span class="material-symbols-outlined text-slate-900"> menu </span>
-        </button>
+        <div class="flex">
+          <button
+            class="p-2 flex items-center justify-center rounded-lg hover:bg-slate-200"
+          >
+            <span class="material-symbols-outlined text-slate-900"> menu </span>
+          </button>
+          <button
+            (click)="themeService.toggle()"
+            class="p-2 flex items-center justify-center rounded-lg hover:bg-slate-200"
+          >
+            <span class="material-symbols-outlined text-slate-900">
+              dark_mode
+            </span>
+          </button>
+        </div>
         <h1 class="text-2xl tracking-tight font-semibold">My Habit Tracker</h1>
         <button
           class="p-2 flex items-center justify-center rounded-lg hover:bg-slate-200"
@@ -47,6 +58,7 @@ export default class HomeComponent implements OnInit {
   habitStore = inject(HabitStore);
   router = inject(Router);
   route = inject(ActivatedRoute);
+  themeService = inject(ThemeService);
   startDate = new Date(2024, 0, 1);
 
   expandedHabitId: string | null = '1c13';

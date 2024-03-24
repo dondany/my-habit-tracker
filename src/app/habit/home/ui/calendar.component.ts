@@ -13,11 +13,13 @@ export interface Week {
     class="flex flex-col cursor-auto text-sm"
     (click)="$event.stopPropagation()"
   >
-    <div class="w-full px-2 flex justify-between">
+    <div
+      class="w-full px-2 flex justify-between text-slate-700 dark:text-slate-200"
+    >
       <button (click)="month = month - 1; generateCalendar()">
         <span class="material-symbols-outlined">chevron_left</span>
       </button>
-      <span class="font-semibold text-slate-700">{{ months[month] }}</span>
+      <span class="font-semibold">{{ months[month] }}</span>
       <button (click)="month = month + 1; generateCalendar()">
         <span class="material-symbols-outlined">chevron_right</span>
       </button>
@@ -25,13 +27,13 @@ export interface Week {
     <div class="grid grid-rows-7 grid-cols-7">
       @for(name of daysOfWeekShort; track $index) {
       <div
-        class="size-10 flex items-center justify-center font-bold text-slate-700"
+        class="size-10 flex items-center justify-center font-bold text-slate-700 dark:text-slate-200"
       >
         {{ name }}
       </div>
       } @for (day of days; track $index) {
       <div
-        class="size-10 flex justify-center items-center text-sm cursor-pointer text-slate-600 relative"
+        class="size-10 flex justify-center items-center text-sm cursor-pointer text-slate-700 dark:text-slate-200 relative"
         (click)="toggle.emit(day)"
       >
         <div

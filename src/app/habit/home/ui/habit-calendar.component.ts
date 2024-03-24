@@ -31,11 +31,11 @@ import { CalendarComponent } from './calendar.component';
         </div>
         <button
           (click)="toggle.emit(); $event.stopPropagation()"
-          class="ml-auto size-12 flex items-center justify-center gap-1 tracking-tight border-transparent font-medium rounded-lg transition duration-150"
+          class="ml-auto size-12 flex items-center justify-center gap-1 tracking-tight border font-medium rounded-lg transition duration-150"
           [ngClass]="
             todayChecked()
               ? colorClass()
-              : 'bg-white dark:bg-transparent dark:border-white'
+              : 'bg-white dark:bg-transparent dark:border-slate-200/20'
           "
         >
           @if (todayChecked()) {
@@ -122,7 +122,7 @@ export class HabitCalendarComponent {
       );
     });
 
-    return completed ? this.colorClass() : 'dark:bg-slate-800';
+    return completed ? this.colorClass() : 'bg-slate-300 dark:bg-slate-800';
   }
 
   isToday(date: Date) {
@@ -149,6 +149,7 @@ export class HabitCalendarComponent {
       'bg-zinc-400': this.habit().color === 'zinc',
       'bg-teal-400': this.habit().color === 'teal',
       'text-white': true,
+      'border-none': true,
     };
   }
 }

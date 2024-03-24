@@ -23,15 +23,15 @@ import { Habit } from '../../shared/model/habit';
   template: `
     <form
       [formGroup]="form"
-      class="flex flex-col gap-3"
+      class="flex flex-col gap-3 dark:text-slate-200"
       (ngSubmit)="onSubmit()"
     >
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-2 ">
         <label for="name" class="text-sm font-medium">Name</label>
         <input
           type="text"
           id="name"
-          class="p-2 border rounded-lg"
+          class="p-2 border rounded-lg dark:bg-slate-500 dark:border-transparent"
           formControlName="name"
         />
       </div>
@@ -41,7 +41,7 @@ import { Habit } from '../../shared/model/habit';
         <input
           type="text"
           id="description"
-          class="p-2 border rounded-lg"
+          class="p-2 border rounded-lg dark:bg-slate-500 dark:border-transparent"
           formControlName="description"
         />
       </div>

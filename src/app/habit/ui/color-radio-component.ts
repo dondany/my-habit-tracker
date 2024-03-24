@@ -10,7 +10,7 @@ import {
   standalone: true,
   selector: 'app-color-radio',
   template: `
-    <div class="w-fit">
+    <div class="w-fit text-transparent">
       <input
         type="radio"
         [id]="color()"
@@ -21,13 +21,18 @@ import {
       />
       <label
         [for]="color()"
-        class="size-12 p-2 border rounded-lg flex justify-center items-center shadow-sm cursor-pointer hover:bg-slate-50 peer-checked:border-slate-900 transition-colors duration-300"
+        class="size-12 p-2 rounded-lg flex justify-center items-center cursor-pointer
+         hover:bg-slate-200 dark:hover:bg-slate-500
+         peer-checked:text-white
+         transition-colors duration-300"
         (change)="onChange()"
       >
         <div
-          class="aspect-square size-10 rounded-lg"
+          class="aspect-square size-10 rounded-lg flex justify-center items-center"
           [ngClass]="colorClass()"
-        ></div>
+        >
+          <span class="material-symbols-outlined">check</span>
+        </div>
       </label>
     </div>
   `,
@@ -45,7 +50,7 @@ export class ColorRadioComponent implements ControlValueAccessor {
   name = input.required<string>();
   onChange: any = () => {};
   onTouched: any = () => {};
-  isChecked: boolean = true;
+  isChecked: boolean = false;
 
   writeValue(value: any): void {
     this.isChecked = value === this.color();

@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-root',
   standalone: true,
   template: ` <div
-    class="flex flex-col items-center gap-4 font-display bg-zinc-50 dark:bg-slate-600"
+    class="h-screen flex flex-col items-center gap-4 font-display bg-zinc-50 dark:bg-slate-800"
     [ngClass]="{ dark: themeService.dark() }"
   >
     <div class="w-[48rem] ">

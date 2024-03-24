@@ -20,7 +20,7 @@ import { RouterLink } from '@angular/router';
       <span class="size-6"></span>
     </div>
     <div
-      class="w-full p-4 flex flex-col gap-3 border rounded-xl bg-white shadow-sm"
+      class="w-full p-4 flex flex-col gap-3 border rounded-xl bg-red dark:bg-slate-700 shadow-sm"
     >
       @if(!!habitStore.openedHabit()) {
 

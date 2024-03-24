@@ -20,7 +20,10 @@ import {
       />
       <label
         [for]="icon()"
-        class="size-12 p-2 border rounded-lg flex justify-center items-center shadow-sm hover:bg-slate-50 cursor-pointer peer-checked:bg-slate-900 peer-checked:text-white transition-colors duration-300"
+        class="size-12 p-2 border rounded-lg flex justify-center items-center shadow-sm 
+        hover:bg-slate-200 dark:hover:bg-slate-500 cursor-pointer 
+        peer-checked:bg-slate-900 peer-checked:text-white 
+        transition-colors duration-300"
         (change)="onChange()"
       >
         <span class="material-symbols-outlined text-2xl">

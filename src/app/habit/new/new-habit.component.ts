@@ -11,16 +11,15 @@ import { HabitFormComponent } from '../ui/habit-form.component';
   standalone: true,
   selector: 'app-new-habit',
   template: `<div
-    class="w-full flex flex-col items-center gap-3 dark:text-slate-200"
+    class="w-full flex flex-col items-center gap-3 
+    text-slate-900 dark:text-slate-200"
   >
     <div class="w-full flex justify-between items-center">
       <button
-        class="p-2 flex items-center justify-center rounded-lg hover:bg-slate-200"
+        class="p-2 flex items-center justify-center rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700"
         routerLink=".."
       >
-        <span class="material-symbols-outlined text-slate-900">
-          arrow_back
-        </span>
+        <span class="material-symbols-outlined "> arrow_back </span>
       </button>
       <h1 class="text-2xl tracking-tight font-semibold">New Habit</h1>
       <span class="size-6"></span>

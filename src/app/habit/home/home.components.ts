@@ -12,7 +12,8 @@ import { ThemeService } from '../../shared/theme.service';
   template: `
     <div class="w-full flex flex-col items-center gap-3">
       <div
-        class="w-full flex justify-between items-center text-slate-900 dark:text-slate-200"
+        class="w-full flex justify-between items-center 
+        text-slate-900 dark:text-slate-200"
       >
         <div class="flex">
           <button

@@ -47,7 +47,7 @@ import { Habit } from '../../shared/model/habit';
       </div>
 
       <span class="text-sm font-medium">Icon</span>
-      <div class="grid grid-cols-12 gap-3">
+      <div class="grid grid-cols-6 md:grid-cols-12 gap-3">
         <app-icon-radio icon="code" name="icon" formControlName="icon" />
         <app-icon-radio icon="cardiology" name="icon" formControlName="icon" />
         <app-icon-radio icon="water_drop" name="icon" formControlName="icon" />
@@ -96,7 +96,7 @@ import { Habit } from '../../shared/model/habit';
       </div>
 
       <span class="text-sm font-medium">Color</span>
-      <div class="grid grid-cols-12 gap-3">
+      <div class="grid grid-cols-6 md:grid-cols-12 gap-3">
         <app-color-radio name="color" color="red" formControlName="color" />
         <app-color-radio name="color" color="blue" formControlName="color" />
         <app-color-radio name="color" color="green" formControlName="color" />
@@ -113,7 +113,9 @@ import { Habit } from '../../shared/model/habit';
 
       <button
         type="submit"
-        class="ml-auto px-4 py-2  bg-slate-900 text-white font-medium rounded-lg tracking-tight flex items-center gap-2"
+        class="ml-auto px-4 py-2  text-white font-medium rounded-lg tracking-tight flex items-center gap-2
+        bg-slate-900 hover:bg-slate-600 
+        transition-colors duration-300"
       >
         @if (habitStore.saving()) {
         <span class="material-symbols-outlined animate-spin opacity-80">

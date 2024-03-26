@@ -10,11 +10,11 @@ export interface Week {
   standalone: true,
   selector: 'app-calendar',
   template: ` <div
-    class="flex flex-col cursor-auto text-sm"
+    class="flex flex-col items-center cursor-auto text-sm"
     (click)="$event.stopPropagation()"
   >
     <div
-      class="w-full px-2 flex justify-between text-slate-700 dark:text-slate-200"
+      class="w-72 px-2 flex justify-between text-slate-700 dark:text-slate-200"
     >
       <button (click)="month = month - 1; generateCalendar()">
         <span class="material-symbols-outlined">chevron_left</span>
@@ -24,16 +24,16 @@ export interface Week {
         <span class="material-symbols-outlined">chevron_right</span>
       </button>
     </div>
-    <div class="grid grid-rows-7 grid-cols-7">
+    <div class="aspect-square size-72 grid grid-rows-7 grid-cols-7">
       @for(name of daysOfWeekShort; track $index) {
       <div
-        class="size-10 flex items-center justify-center font-bold text-slate-700 dark:text-slate-200"
+        class="flex items-center justify-center font-bold text-slate-700 dark:text-slate-200"
       >
         {{ name }}
       </div>
       } @for (day of days; track $index) {
       <div
-        class="size-10 flex justify-center items-center text-sm cursor-pointer text-slate-700 dark:text-slate-200 relative"
+        class="flex justify-center items-center text-sm cursor-pointer text-slate-700 dark:text-slate-200 relative"
         (click)="toggle.emit(day)"
       >
         <div

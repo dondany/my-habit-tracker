@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
     class="h-screen flex flex-col items-center gap-4 font-display bg-zinc-50 dark:bg-slate-800"
     [ngClass]="{ dark: themeService.dark() }"
   >
-    <div class="w-[48rem] ">
+    <div class="w-96 md:w-[48rem] mt-3">
       <router-outlet />
     </div>
   </div>`,

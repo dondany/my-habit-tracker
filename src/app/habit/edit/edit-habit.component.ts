@@ -7,14 +7,15 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   selector: 'app-edit-habit',
   template: ` <div class="w-full flex flex-col items-center gap-3 ">
-    <div class="w-full flex justify-between items-center">
+    <div
+      class="w-full flex justify-between items-center 
+      text-slate-900 dark:text-slate-200 "
+    >
       <button
-        class="p-2 flex items-center justify-center rounded-lg hover:bg-slate-200"
+        class="p-2 flex items-center justify-center rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700"
         routerLink="../"
       >
-        <span class="material-symbols-outlined text-slate-900">
-          arrow_back
-        </span>
+        <span class="material-symbols-outlined"> arrow_back </span>
       </button>
       <h1 class="text-2xl tracking-tight font-semibold">Edit Habit</h1>
       <span class="size-6"></span>

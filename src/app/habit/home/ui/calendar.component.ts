@@ -11,11 +11,10 @@ export interface Week {
   selector: 'app-calendar',
   template: ` <div
     class="flex flex-col items-center cursor-auto text-sm"
-    (click)="$event.stopPropagation()"
-  >
+    aria-hidden="true"
+    (click)="$event.stopPropagation()">
     <div
-      class="w-72 px-2 flex justify-between text-slate-700 dark:text-slate-200"
-    >
+      class="w-72 px-2 flex justify-between text-slate-700 dark:text-slate-200">
       <button (click)="month = month - 1; generateCalendar()">
         <span class="material-symbols-outlined">chevron_left</span>
       </button>
@@ -25,35 +24,31 @@ export interface Week {
       </button>
     </div>
     <div class="aspect-square size-72 grid grid-rows-7 grid-cols-7">
-      @for(name of daysOfWeekShort; track $index) {
-      <div
-        class="flex items-center justify-center font-bold text-slate-700 dark:text-slate-200"
-      >
-        {{ name }}
-      </div>
-      } @for (day of days; track $index) {
-      <div
-        class="flex justify-center items-center text-sm cursor-pointer text-slate-700 dark:text-slate-200 relative"
-        (click)="toggle.emit(day)"
-      >
+      @for (name of daysOfWeekShort; track $index) {
         <div
-          class="absolute h-7 z-10 left-0 w-[50%] transition-opacity duration-150"
-          [ngClass]="chainClass(day, 'left')"
-        ></div>
-        <div
-          class="absolute h-7 z-10 right-0 w-[50%] transition-opacity duration-150"
-          [ngClass]="chainClass(day, 'right')"
-        ></div>
-
-        <div
-          class="size-7 z-20 rounded-full flex justify-center items-center text-xs font-semibold transition-colors duration-150"
-          [ngClass]="dayClass(day)"
-        >
-          <span [ngClass]="{ 'opacity-80': day.getMonth() !== month }">{{
-            day.getDate()
-          }}</span>
+          class="flex items-center justify-center font-bold text-slate-700 dark:text-slate-200">
+          {{ name }}
         </div>
-      </div>
+      }
+      @for (day of days; track $index) {
+        <div
+          class="flex justify-center items-center text-sm cursor-pointer text-slate-700 dark:text-slate-200 relative"
+          (click)="toggle.emit(day)">
+          <div
+            class="absolute h-7 z-10 left-0 w-[50%] transition-opacity duration-150"
+            [ngClass]="chainClass(day, 'left')"></div>
+          <div
+            class="absolute h-7 z-10 right-0 w-[50%] transition-opacity duration-150"
+            [ngClass]="chainClass(day, 'right')"></div>
+
+          <div
+            class="size-7 z-20 rounded-full flex justify-center items-center text-xs font-semibold transition-colors duration-150"
+            [ngClass]="dayClass(day)">
+            <span [ngClass]="{ 'opacity-80': day.getMonth() !== month }">{{
+              day.getDate()
+            }}</span>
+          </div>
+        </div>
       }
     </div>
   </div>`,
@@ -94,7 +89,7 @@ export class CalendarComponent {
     const firstDayIndex = firstDay.getDay();
     const daysInMonth = lastDay.getDate();
 
-    let days: Date[] = [];
+    const days: Date[] = [];
 
     for (let i = firstDayIndex - 1; i > 0; i--) {
       days.push(new Date(this.year, this.month, firstDay.getDate() - i));
@@ -114,7 +109,7 @@ export class CalendarComponent {
 
   isDayMarked(date: Date) {
     return this.habitDays().some(
-      (d) =>
+      d =>
         d.date.getFullYear() === date.getFullYear() &&
         d.date.getMonth() === date.getMonth() &&
         d.date.getDate() === date.getDate()

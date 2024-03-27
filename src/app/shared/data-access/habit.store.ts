@@ -1,10 +1,10 @@
 import { inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { of, pipe, switchMap, tap } from 'rxjs';
 import { Habit, ToggleHabit } from '../model/habit';
 import { HabitService } from './habit.service';
-import { Router } from '@angular/router';
 
 export interface HabitState {
   habits: Habit[];
@@ -28,21 +28,21 @@ export const HabitStore = signalStore(
       return {
         init: rxMethod<number>(
           pipe(
-            switchMap((year) => generateYearDays(year)),
-            tap((days) => patchState(store, { daysToDisplay: days }))
+            switchMap(year => generateYearDays(year)),
+            tap(days => patchState(store, { daysToDisplay: days }))
           )
         ),
         initHabits: rxMethod<number>(
           pipe(
-            switchMap((year) => habitService.getHabits()),
-            tap((habits) => patchState(store, { habits }))
+            switchMap(() => habitService.getHabits()),
+            tap(habits => patchState(store, { habits }))
           )
         ),
         openHabit: rxMethod<string>(
           pipe(
             tap(() => patchState(store, { loading: true })),
-            switchMap((id) => habitService.getHabit(id)),
-            tap((habit) =>
+            switchMap(id => habitService.getHabit(id)),
+            tap(habit =>
               patchState(store, { openedHabit: habit, loading: false })
             )
           )
@@ -50,42 +50,42 @@ export const HabitStore = signalStore(
         addHabit: rxMethod<Habit>(
           pipe(
             tap(() => patchState(store, { saving: true })),
-            switchMap((habit) => habitService.addHabit(habit)),
+            switchMap(habit => habitService.addHabit(habit)),
             tap(() => patchState(store, { saving: false, loading: true })),
-            switchMap((year) => habitService.getHabits()),
-            tap((habits) => patchState(store, { habits, loading: false })),
+            switchMap(() => habitService.getHabits()),
+            tap(habits => patchState(store, { habits, loading: false })),
             tap(() => router.navigate(['/habit']))
           )
         ),
         updateHabit: rxMethod<Habit>(
           pipe(
             tap(() => patchState(store, { saving: true })),
-            switchMap((habit) => habitService.updateHabit(habit)),
+            switchMap(habit => habitService.updateHabit(habit)),
             tap(() => patchState(store, { saving: false, loading: true })),
-            switchMap((year) => habitService.getHabits()),
-            tap((habits) => patchState(store, { habits, loading: false })),
+            switchMap(() => habitService.getHabits()),
+            tap(habits => patchState(store, { habits, loading: false })),
             tap(() => router.navigate(['/habit']))
           )
         ),
         deleteHabit: rxMethod<string>(
           pipe(
-            switchMap((id) => habitService.deleteHabit(id)),
-            switchMap((year) => habitService.getHabits()),
-            tap((habits) => patchState(store, { habits, loading: false }))
+            switchMap(id => habitService.deleteHabit(id)),
+            switchMap(() => habitService.getHabits()),
+            tap(habits => patchState(store, { habits, loading: false }))
           )
         ),
         addDay: rxMethod<ToggleHabit>(
           pipe(
-            switchMap((update) => habitService.addDay(update.id, update.date)),
-            switchMap((year) => habitService.getHabits()),
-            tap((habits) => patchState(store, { habits }))
+            switchMap(update => habitService.addDay(update.id, update.date)),
+            switchMap(() => habitService.getHabits()),
+            tap(habits => patchState(store, { habits }))
           )
         ),
         deleteDay: rxMethod<string>(
           pipe(
-            switchMap((id) => habitService.deleteDay(id)),
-            switchMap((year) => habitService.getHabits()),
-            tap((habits) => patchState(store, { habits }))
+            switchMap(id => habitService.deleteDay(id)),
+            switchMap(() => habitService.getHabits()),
+            tap(habits => patchState(store, { habits }))
           )
         ),
       };

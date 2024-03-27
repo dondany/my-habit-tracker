@@ -9,26 +9,21 @@ import { RouterLink } from '@angular/router';
   template: ` <div class="w-full flex flex-col items-center gap-3 ">
     <div
       class="w-full flex justify-between items-center 
-      text-slate-900 dark:text-slate-200 "
-    >
+      text-slate-900 dark:text-slate-200 ">
       <button
         class="p-2 flex items-center justify-center rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700"
-        routerLink="../"
-      >
+        routerLink="../">
         <span class="material-symbols-outlined"> arrow_back </span>
       </button>
       <h1 class="text-2xl tracking-tight font-semibold">Edit Habit</h1>
       <span class="size-6"></span>
     </div>
     <div
-      class="w-full p-4 flex flex-col gap-3 border rounded-xl bg-red dark:bg-slate-700 shadow-sm"
-    >
-      @if(!!habitStore.openedHabit()) {
-
-      <app-habit-form
-        [habit]="habitStore.openedHabit()!"
-        (save)="habitStore.updateHabit($event)"
-      />
+      class="w-full p-4 flex flex-col gap-3 border rounded-xl bg-red dark:bg-slate-700 shadow-sm">
+      @if (!!habitStore.openedHabit()) {
+        <app-habit-form
+          [habit]="habitStore.openedHabit()!"
+          (save)="habitStore.updateHabit($event)" />
       }
     </div>
   </div>`,
@@ -40,7 +35,6 @@ export default class EditHabitComponent implements OnInit {
   id = input.required<string>();
 
   ngOnInit(): void {
-    console.log('init');
     this.habitStore.openHabit(this.id());
   }
 }

@@ -16,16 +16,14 @@ import {
         [name]="name()"
         class="hidden peer"
         (change)="onInputChange()"
-        [checked]="isChecked"
-      />
+        [checked]="isChecked" />
       <label
         [for]="icon()"
         class="size-12 p-2 border rounded-lg flex justify-center items-center shadow-sm 
         hover:bg-slate-200 dark:hover:bg-slate-500 cursor-pointer 
         peer-checked:bg-slate-900 peer-checked:text-white 
         transition-colors duration-300"
-        (change)="onChange()"
-      >
+        (change)="onChange()">
         <span class="material-symbols-outlined text-2xl">
           {{ icon() }}
         </span>

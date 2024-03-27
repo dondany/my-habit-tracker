@@ -13,9 +13,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { HabitStore } from '../../shared/data-access/habit.store';
+import { Habit } from '../../shared/model/habit';
 import { ColorRadioComponent } from './color-radio-component';
 import { IconRadioComponent } from './icon-radio.component';
-import { Habit } from '../../shared/model/habit';
 
 @Component({
   standalone: true,
@@ -24,16 +24,14 @@ import { Habit } from '../../shared/model/habit';
     <form
       [formGroup]="form"
       class="flex flex-col gap-3 dark:text-slate-200"
-      (ngSubmit)="onSubmit()"
-    >
+      (ngSubmit)="onSubmit()">
       <div class="flex flex-col gap-2 ">
         <label for="name" class="text-sm font-medium">Name</label>
         <input
           type="text"
           id="name"
           class="p-2 border rounded-lg dark:bg-slate-500 dark:border-transparent"
-          formControlName="name"
-        />
+          formControlName="name" />
       </div>
 
       <div class="flex flex-col gap-2">
@@ -42,8 +40,7 @@ import { Habit } from '../../shared/model/habit';
           type="text"
           id="description"
           class="p-2 border rounded-lg dark:bg-slate-500 dark:border-transparent"
-          formControlName="description"
-        />
+          formControlName="description" />
       </div>
 
       <span class="text-sm font-medium">Icon</span>
@@ -64,33 +61,28 @@ import { Habit } from '../../shared/model/habit';
         <app-icon-radio
           icon="fitness_center"
           name="icon"
-          formControlName="icon"
-        />
+          formControlName="icon" />
         <app-icon-radio icon="camera" name="icon" formControlName="icon" />
         <app-icon-radio
           icon="shopping_cart"
           name="icon"
-          formControlName="icon"
-        />
+          formControlName="icon" />
         <app-icon-radio icon="savings" name="icon" formControlName="icon" />
         <app-icon-radio icon="ink_pen" name="icon" formControlName="icon" />
         <app-icon-radio icon="music_note" name="icon" formControlName="icon" />
         <app-icon-radio
           icon="directions_bike"
           name="icon"
-          formControlName="icon"
-        />
+          formControlName="icon" />
         <app-icon-radio icon="school" name="icon" formControlName="icon" />
         <app-icon-radio
           icon="self_improvement"
           name="icon"
-          formControlName="icon"
-        />
+          formControlName="icon" />
         <app-icon-radio
           icon="construction"
           name="icon"
-          formControlName="icon"
-        />
+          formControlName="icon" />
         <app-icon-radio icon="piano" name="icon" formControlName="icon" />
         <app-icon-radio icon="hotel" name="icon" formControlName="icon" />
       </div>
@@ -115,12 +107,11 @@ import { Habit } from '../../shared/model/habit';
         type="submit"
         class="ml-auto px-4 py-2  text-white font-medium rounded-lg tracking-tight flex items-center gap-2
         bg-slate-900 hover:bg-slate-600 
-        transition-colors duration-300"
-      >
+        transition-colors duration-300">
         @if (habitStore.saving()) {
-        <span class="material-symbols-outlined animate-spin opacity-80">
-          progress_activity
-        </span>
+          <span class="material-symbols-outlined animate-spin opacity-80">
+            progress_activity
+          </span>
         }
         <span>Save</span>
       </button>
@@ -142,7 +133,7 @@ export class HabitFormComponent {
 
   constructor() {
     effect(() => {
-      if (!!this.habit()) {
+      if (this.habit()) {
         this.form.patchValue({
           name: this.habit()?.name,
           description: this.habit()?.description,
@@ -156,7 +147,7 @@ export class HabitFormComponent {
   onSubmit() {
     console.log('sub');
     const habit: Habit = {
-      id: !!this.habit() ? this.habit()!.id : undefined,
+      id: this.habit() ? this.habit()!.id : undefined,
       name: this.form.getRawValue().name!,
       description: this.form.getRawValue().description!,
       icon: this.form.getRawValue().icon!,

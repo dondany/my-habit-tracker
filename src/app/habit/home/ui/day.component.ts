@@ -6,8 +6,7 @@ import { Component, ElementRef, input } from '@angular/core';
   selector: 'app-day',
   template: ` <div
     class="size-[12px] rounded relative"
-    [ngClass]="clazz()"
-  ></div>`,
+    [ngClass]="clazz()"></div>`,
   imports: [CommonModule],
 })
 export class DayComponent {

@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Habit } from '../model/habit';
-import { map, tap } from 'rxjs';
 import { Day } from '../model/day';
+import { Habit } from '../model/habit';
 
 @Injectable({
   providedIn: 'root',

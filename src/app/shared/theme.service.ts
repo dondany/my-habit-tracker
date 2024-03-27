@@ -12,7 +12,7 @@ export class ThemeService {
   }
 
   toggle() {
-    this.dark.update((value) => !value);
+    this.dark.update(value => !value);
     localStorage.setItem('theme', this.dark() ? 'dark' : 'light');
   }
 }

@@ -4,7 +4,7 @@ export const routes: Routes = [
   {
     path: 'habit',
     loadChildren: () =>
-      import('./habit/habit.routes').then((m) => m.HABIT_ROUTES),
+      import('./habit/habit.routes').then(m => m.HABIT_ROUTES),
   },
   {
     path: '',

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, forwardRef, input } from '@angular/core';
+import { Component, forwardRef, input } from '@angular/core';
 import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
@@ -17,20 +17,17 @@ import {
         [name]="name()"
         class="hidden peer"
         (change)="onInputChange()"
-        [checked]="isChecked"
-      />
+        [checked]="isChecked" />
       <label
         [for]="color()"
         class="size-12 p-2 rounded-lg flex justify-center items-center cursor-pointer
          hover:bg-slate-200 dark:hover:bg-slate-500
          peer-checked:text-white
          transition-colors duration-300"
-        (change)="onChange()"
-      >
+        (change)="onChange()">
         <div
           class="aspect-square size-10 rounded-lg flex justify-center items-center"
-          [ngClass]="colorClass()"
-        >
+          [ngClass]="colorClass()">
           <span class="material-symbols-outlined">check</span>
         </div>
       </label>

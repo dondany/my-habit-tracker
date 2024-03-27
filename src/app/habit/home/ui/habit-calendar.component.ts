@@ -9,7 +9,6 @@ import {
   ViewChild,
   ViewChildren,
   computed,
-  effect,
   input,
 } from '@angular/core';
 import { Habit } from '../../../shared/model/habit';
@@ -23,13 +22,12 @@ import { DayComponent } from './day.component';
     <div
       class="p-4 flex flex-col gap-4 border rounded-xl cursor-pointer
       bg-white dark:bg-slate-700 dark:border-none shadow-sm"
-      (click)="expand.emit()"
-    >
+      aria-hidden="true"
+      (click)="expand.emit()">
       <div class="flex justify-start items-start gap-3">
         <div
           class="size-12 flex justify-center items-center rounded-lg"
-          [ngClass]="colorClass()"
-        >
+          [ngClass]="colorClass()">
           <span class="material-symbols-outlined">{{ habit().icon }}</span>
         </div>
         <div class="flex flex-col dark:text-slate-200">
@@ -43,56 +41,50 @@ import { DayComponent } from './day.component';
             todayChecked()
               ? colorClass()
               : 'bg-white dark:bg-transparent dark:border-slate-200/20'
-          "
-        >
+          ">
           @if (todayChecked()) {
-          <span class="material-symbols-outlined text-lg font-semibold">
-            done
-          </span>
+            <span class="material-symbols-outlined text-lg font-semibold">
+              done
+            </span>
           }
         </button>
       </div>
       <div
         #scroll
-        class="grid grid-rows-7 grid-flow-col gap-[1px] overflow-x-scroll [&::-webkit-scrollbar]:hidden"
-      >
-        @for(i of [].constructor(startDate().getDay()-1); track $index) {
-        <div class="size-[12px] rounded"></div>
-        } @for(day of daysToDisplay(); track $index) {
-        <app-day
-          [color]="habit().color!"
-          [day]="day"
-          [isCompleted]="isCompleted(day)"
-          [id]="'day' + $index"
-          #day
-        />
+        class="grid grid-rows-7 grid-flow-col gap-[1px] overflow-x-scroll [&::-webkit-scrollbar]:hidden">
+        @for (i of [].constructor(startDate().getDay() - 1); track $index) {
+          <div class="size-[12px] rounded"></div>
+        }
+        @for (day of daysToDisplay(); track $index) {
+          <app-day
+            [color]="habit().color!"
+            [day]="day"
+            [isCompleted]="isCompleted(day)"
+            [id]="'day' + $index"
+            #day />
         }
       </div>
 
       <div
         class="w-full transition-all duration-500 ease-in-out overflow-hidden select-none"
-        [ngClass]="isExpanded() ? 'h-96' : 'h-0'"
-      >
+        [ngClass]="isExpanded() ? 'h-96' : 'h-0'">
         <div class="w-full mt-2">
           <app-calendar
             [habitDays]="habit().days"
             [color]="habit().color!"
             class=""
-            (toggle)="dayToggle.emit($event)"
-          />
+            (toggle)="dayToggle.emit($event)" />
           <div class="flex flex-col gap-2 py-4 justify-between">
             <div class="flex justify-end gap-2">
               <button
                 (click)="edit.emit(); $event.stopPropagation()"
-                class="size-fit px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-600 font-thin flex items-center gap-2 rounded-lg"
-              >
+                class="size-fit px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-600 font-thin flex items-center gap-2 rounded-lg">
                 <span class="material-symbols-outlined text-lg"> edit </span>
                 <span class="font-medium">Edit</span>
               </button>
               <button
                 (click)="delete.emit(); $event.stopPropagation()"
-                class="size-fit px-2 py-1 bg-red-100 hover:bg-red-200 text-slate-600 font-thin flex items-center gap-2 rounded-lg"
-              >
+                class="size-fit px-2 py-1 bg-red-100 hover:bg-red-200 text-slate-600 font-thin flex items-center gap-2 rounded-lg">
                 <span class="material-symbols-outlined text-lg"> delete </span>
                 <span class="font-medium">Delete</span>
               </button>
@@ -123,7 +115,7 @@ export class HabitCalendarComponent implements AfterViewInit {
     new Date(this.startDate().getFullYear(), 0, 1).getDay()
   );
   todayChecked = computed(() =>
-    this.habit().days.some((d) => this.isToday(d.date))
+    this.habit().days.some(d => this.isToday(d.date))
   );
   days = computed(() => (this.habit().days ? this.habit().days : []));
 
@@ -132,11 +124,11 @@ export class HabitCalendarComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     const today = new Date();
     const todayDay = this.allDays.find(
-      (d) =>
+      d =>
         d.day().getMonth() == today.getMonth() &&
         d.day().getDate() === today.getDate()
     );
-    if (!!todayDay) {
+    if (todayDay) {
       const offset =
         todayDay.elRef.nativeElement.offsetLeft -
         this.scroll.nativeElement.offsetLeft -
@@ -151,7 +143,7 @@ export class HabitCalendarComponent implements AfterViewInit {
       return false;
     }
 
-    return this.days().some((d) => {
+    return this.days().some(d => {
       return (
         d.date.getFullYear() === date.getFullYear() &&
         d.date.getMonth() === date.getMonth() &&

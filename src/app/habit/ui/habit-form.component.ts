@@ -105,9 +105,9 @@ import { IconRadioComponent } from './icon-radio.component';
 
       <button
         type="submit"
-        class="ml-auto px-4 py-2  text-white font-medium rounded-lg tracking-tight flex items-center gap-2
+        class="ml-auto mt-2 px-4 py-2 text-white font-medium tracking-tight rounded-lg flex items-center gap-2
         bg-slate-900 hover:bg-slate-600 
-        transition-colors duration-300">
+        transition-colors duration-200">
         @if (habitStore.saving()) {
           <span class="material-symbols-outlined animate-spin opacity-80">
             progress_activity

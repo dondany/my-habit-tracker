@@ -78,13 +78,19 @@ import { DayComponent } from './day.component';
             <div class="flex justify-end gap-2">
               <button
                 (click)="edit.emit(); $event.stopPropagation()"
-                class="size-fit px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-600 font-thin flex items-center gap-2 rounded-lg">
+                class="size-fit px-2 py-1 flex items-center gap-1 rounded-lg tracking-tight 
+                bg-slate-200 hover:bg-slate-300 text-slate-700
+                dark:bg-slate-600 dark:hover:bg-slate-500 dark:text-slate-300
+                transition-colors duration-200">
                 <span class="material-symbols-outlined text-lg"> edit </span>
                 <span class="font-medium">Edit</span>
               </button>
               <button
                 (click)="delete.emit(); $event.stopPropagation()"
-                class="size-fit px-2 py-1 bg-red-100 hover:bg-red-200 text-slate-600 font-thin flex items-center gap-2 rounded-lg">
+                class="size-fit px-2 py-1 flex items-center gap-1 rounded-lg tracking-tight
+                bg-slate-200 hover:bg-slate-300 text-slate-700
+                dark:bg-slate-600 dark:hover:bg-slate-500 dark:text-slate-300
+                transition-colors duration-200">
                 <span class="material-symbols-outlined text-lg"> delete </span>
                 <span class="font-medium">Delete</span>
               </button>

@@ -14,7 +14,7 @@ import {
 } from '@angular/forms';
 import { HabitStore } from '../../shared/data-access/habit.store';
 import { Habit } from '../../shared/model/habit';
-import { ColorRadioComponent } from './color-radio-component';
+import { ColorRadioComponent } from './color-radio.component';
 import { IconRadioComponent } from './icon-radio.component';
 
 @Component({

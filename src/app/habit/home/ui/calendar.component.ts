@@ -10,7 +10,7 @@ export interface Week {
   standalone: true,
   selector: 'app-calendar',
   template: ` <div
-    class="flex flex-col items-center cursor-auto text-sm"
+    class="w-fit flex flex-col items-center cursor-auto text-sm"
     aria-hidden="true"
     (click)="$event.stopPropagation()">
     <div

@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ColorRadioComponent } from '../ui/color-radio-component';
+import { ColorRadioComponent } from '../ui/color-radio.component';
 import { IconRadioComponent } from '../ui/icon-radio.component';
 
 import { ReactiveFormsModule } from '@angular/forms';

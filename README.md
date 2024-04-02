@@ -1,27 +1,16 @@
 # MyHabitTracker
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.3.
+This is a practice project is inspired by `https://www.habitkit.app/`.
+It let's you create habit calendars and track your daily progress.
+
+![List of all habits](/assets/habit_list.PNG)
+![Expanded habit with a calendar](/assets/expanded_habit.PNG)
+![Edit habit view](/assets/edit_habit.PNG)
+![New habit view](/assets/new_habit.PNG)
+![Light  theme](/assets/light_theme.PNG)
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+For a dev server, install json-server `npm install -g json-server`
+Run `json-server --watch db.json --port 8000`. The backend will be served on `http://localhost:8000`
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.'

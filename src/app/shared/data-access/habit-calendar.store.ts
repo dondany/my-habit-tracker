@@ -37,11 +37,18 @@ export const HabitCalendarStore = signalStore(
       )
     ),
     changeYear(value: number) {
-      console.log('value', store.year());
       patchState(store, state => ({ year: state.year + value }));
     },
     changeMonth(value: number) {
-      patchState(store, state => ({ month: state.month + value }));
+      const year =
+        store.month() === 11 && value > 0
+          ? store.year() + 1
+          : store.month() === 0 && value < 0
+            ? store.year() - 1
+            : store.year();
+      const month = (store.month() + value + 12) % 12;
+
+      patchState(store, () => ({ month, year }));
     },
     addDay: rxMethod<Date>(
       pipe(

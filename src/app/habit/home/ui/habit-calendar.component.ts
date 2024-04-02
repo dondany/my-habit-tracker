@@ -277,8 +277,4 @@ export class HabitCalendarComponent implements AfterViewInit, OnInit {
       'border-none': true,
     };
   }
-
-  updateYear(value: number) {
-    this.habitCalendarStore.changeYear(value);
-  }
 }

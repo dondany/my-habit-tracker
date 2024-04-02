@@ -18,7 +18,7 @@ export interface Week {
       <button (click)="changeMonth.emit(-1)">
         <span class="material-symbols-outlined">chevron_left</span>
       </button>
-      <span class="font-semibold">{{ months[month()] }}</span>
+      <span class="font-semibold">{{ months[month()] }} {{ year() }}</span>
       <button (click)="changeMonth.emit(1)">
         <span class="material-symbols-outlined">chevron_right</span>
       </button>

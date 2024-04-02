@@ -2,8 +2,6 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   OnInit,
-  QueryList,
-  ViewChildren,
   computed,
   effect,
   inject,
@@ -24,10 +22,6 @@ import { HabitCalendarComponent } from './ui/habit-calendar.component';
         text-slate-900 dark:text-slate-200">
         <div class="flex">
           <button
-            class="p-2 flex items-center justify-center rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700">
-            <span class="material-symbols-outlined "> menu </span>
-          </button>
-          <button
             (click)="themeService.toggle()"
             class="p-2 flex items-center justify-center rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700">
             <span class="material-symbols-outlined "> dark_mode </span>
@@ -38,16 +32,6 @@ import { HabitCalendarComponent } from './ui/habit-calendar.component';
           class="p-2 flex items-center justify-center rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700"
           routerLink="new-habit">
           <span class="material-symbols-outlined"> add </span>
-        </button>
-      </div>
-      <div
-        class="w-72 px-2 flex justify-between text-slate-700 dark:text-slate-200">
-        <button (click)="updateYear(-1)">
-          <span class="material-symbols-outlined">chevron_left</span>
-        </button>
-        <span class="font-semibold">{{ year() }}</span>
-        <button (click)="updateYear(1)">
-          <span class="material-symbols-outlined">chevron_right</span>
         </button>
       </div>
       <div class="w-full flex flex-col gap-3">
@@ -74,9 +58,6 @@ export default class HomeComponent implements OnInit {
   year = signal(new Date().getFullYear());
   startDate = computed(() => new Date(this.year(), 0, 1));
 
-  @ViewChildren(HabitCalendarComponent)
-  calendars!: QueryList<HabitCalendarComponent>;
-
   expandedHabitId: string | null = null;
 
   constructor() {
@@ -93,12 +74,5 @@ export default class HomeComponent implements OnInit {
 
   onExpand(id: string) {
     this.expandedHabitId = this.expandedHabitId === id ? null : id;
-  }
-
-  updateYear(value: number) {
-    this.year.update(year => year + value);
-    this.calendars.forEach(calendar => {
-      calendar.updateYear(value);
-    });
   }
 }

@@ -3,11 +3,11 @@
 This is a practice project is inspired by `https://www.habitkit.app/`.
 It let's you create habit calendars and track your daily progress.
 
-![List of all habits](/assets/habit_list.PNG)
-![Expanded habit with a calendar](/assets/expanded_habit.PNG)
-![Edit habit view](/assets/edit_habit.PNG)
-![New habit view](/assets/new_habit.PNG)
-![Light  theme](/assets/light_theme.PNG)
+![List of all habits](/assets/habit_list.PNG "List of all habits")
+![Expanded habit with a calendar](/assets/expanded_habit.PNG "Expanded habit with a calendar")
+![Edit habit view](/assets/edit_habit.PNG "Edit habit view")
+![New habit view](/assets/new_habit.PNG "New habit view")
+![Light  theme](/assets/light_theme.PNG "Light  theme")
 
 ## Development server
 

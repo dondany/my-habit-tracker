@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { of, pipe, switchMap, tap } from 'rxjs';
-import { Habit, ToggleHabit } from '../model/habit';
+import { Habit } from '../model/habit';
 import { HabitService } from './habit.service';
 
 export interface HabitState {
@@ -26,12 +26,6 @@ export const HabitStore = signalStore(
   withMethods(
     (store, habitService = inject(HabitService), router = inject(Router)) => {
       return {
-        init: rxMethod<number>(
-          pipe(
-            switchMap(year => generateYearDays(year)),
-            tap(days => patchState(store, { daysToDisplay: days }))
-          )
-        ),
         initHabits: rxMethod<number>(
           pipe(
             switchMap(() => habitService.getHabits()),
@@ -72,20 +66,6 @@ export const HabitStore = signalStore(
             switchMap(id => habitService.deleteHabit(id)),
             switchMap(() => habitService.getHabits()),
             tap(habits => patchState(store, { habits, loading: false }))
-          )
-        ),
-        addDay: rxMethod<ToggleHabit>(
-          pipe(
-            switchMap(update => habitService.addDay(update.id, update.date)),
-            switchMap(() => habitService.getHabits()),
-            tap(habits => patchState(store, { habits }))
-          )
-        ),
-        deleteDay: rxMethod<string>(
-          pipe(
-            switchMap(id => habitService.deleteDay(id)),
-            switchMap(() => habitService.getHabits()),
-            tap(habits => patchState(store, { habits }))
           )
         ),
       };

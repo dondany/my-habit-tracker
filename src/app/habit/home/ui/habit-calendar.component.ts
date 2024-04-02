@@ -4,17 +4,20 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  OnInit,
   Output,
   QueryList,
   ViewChild,
   ViewChildren,
   computed,
+  inject,
   input,
 } from '@angular/core';
-import { Habit } from '../../../shared/model/habit';
+import { HabitCalendarStore } from '../../../shared/data-access/habit-calendar.store';
+import { ClickOutsideDirective } from '../../../shared/directives/click-outside.directive';
+import DateUtils from '../../../shared/util/date.util';
 import { CalendarComponent } from './calendar.component';
 import { DayComponent } from './day.component';
-import { ClickOutsideDirective } from '../../../shared/directives/click-outside.directive';
 
 @Component({
   standalone: true,
@@ -28,15 +31,15 @@ import { ClickOutsideDirective } from '../../../shared/directives/click-outside.
       <div class="flex justify-start items-start gap-3">
         <div
           class="size-12 flex justify-center items-center rounded-lg"
-          [ngClass]="colorClass()">
-          <span class="material-symbols-outlined">{{ habit().icon }}</span>
+          [ngClass]="color()">
+          <span class="material-symbols-outlined">{{ habit()?.icon }}</span>
         </div>
         <div class="flex flex-col dark:text-slate-200">
-          <span class="font-medium tracking-tight">{{ habit().name }}</span>
-          <span class="text-sm">{{ habit().description }}</span>
+          <span class="font-medium tracking-tight">{{ habit()?.name }}</span>
+          <span class="text-sm">{{ habit()?.description }}</span>
         </div>
         <button
-          (click)="toggle.emit(); $event.stopPropagation()"
+          (click)="toggleToday(); $event.stopPropagation()"
           class="ml-auto size-12 flex items-center justify-center gap-1 tracking-tight border font-medium rounded-lg transition duration-150"
           [ngClass]="
             todayChecked()
@@ -56,11 +59,11 @@ import { ClickOutsideDirective } from '../../../shared/directives/click-outside.
         @for (i of [].constructor(startDate().getDay() - 1); track $index) {
           <div class="size-[12px] rounded"></div>
         }
-        @for (day of daysToDisplay(); track $index) {
+        @for (day of habitCalendarStore.daysInYear(); track $index) {
           <app-day
-            [color]="habit().color!"
-            [day]="day"
-            [isCompleted]="isCompleted(day)"
+            [color]="habit()!.color!"
+            [day]="day.date"
+            [isCompleted]="day.isCompleted"
             [id]="'day' + $index"
             #day />
         }
@@ -70,11 +73,16 @@ import { ClickOutsideDirective } from '../../../shared/directives/click-outside.
         class="w-full transition-all duration-500 ease-in-out overflow-hidden select-none"
         [ngClass]="isExpanded() ? 'h-96' : 'h-0'">
         <div class="w-full mt-2 flex flex-col items-center justify-center">
-          <app-calendar
-            [habitDays]="habit().days"
-            [color]="habit().color!"
-            class=""
-            (toggle)="dayToggle.emit($event)" />
+          @if (habit()) {
+            <app-calendar
+              [habitDays]="habit()!.days"
+              [year]="habitCalendarStore.year()"
+              [month]="habitCalendarStore.month()"
+              [color]="habit()!.color!"
+              class=""
+              (toggle)="toggleDay($event)"
+              (changeMonth)="habitCalendarStore.changeMonth($event)" />
+          }
           <div class="ml-auto flex justify-end gap-2">
             <button
               (click)="edit.emit(); $event.stopPropagation()"
@@ -140,15 +148,14 @@ import { ClickOutsideDirective } from '../../../shared/directives/click-outside.
     DayComponent,
     ClickOutsideDirective,
   ],
+  providers: [HabitCalendarStore],
 })
-export class HabitCalendarComponent implements AfterViewInit {
-  habit = input.required<Habit>();
-  daysToDisplay = input.required<Date[]>();
+export class HabitCalendarComponent implements AfterViewInit, OnInit {
+  habitId = input.required<string>();
   startDate = input.required<Date>();
   isExpanded = input<boolean>(false);
+  habitCalendarStore = inject(HabitCalendarStore);
 
-  @Output() toggle: EventEmitter<void> = new EventEmitter();
-  @Output() dayToggle = new EventEmitter<Date>();
   @Output() delete: EventEmitter<void> = new EventEmitter();
   @Output() edit: EventEmitter<void> = new EventEmitter();
   @Output() expand: EventEmitter<void> = new EventEmitter();
@@ -156,24 +163,50 @@ export class HabitCalendarComponent implements AfterViewInit {
   @ViewChild('scroll') scroll!: ElementRef<HTMLElement>;
   @ViewChildren('day') allDays!: QueryList<DayComponent>;
 
-  firstDay = computed(() =>
-    new Date(this.startDate().getFullYear(), 0, 1).getDay()
+  habit = computed(() => this.habitCalendarStore.habit());
+  todayChecked = computed(() => {
+    if (this.habitCalendarStore.habit()) {
+      return this.habitCalendarStore
+        .habit()!
+        .days.some(d => this.isToday(d.date));
+    } else {
+      return false;
+    }
+  });
+  days = computed(() =>
+    this.habitCalendarStore.habit() ? this.habitCalendarStore.habit()!.days : []
   );
-  todayChecked = computed(() =>
-    this.habit().days.some(d => this.isToday(d.date))
-  );
-  days = computed(() => (this.habit().days ? this.habit().days : []));
-
+  color = computed(() => {
+    if (!this.habit()) {
+      return {};
+    }
+    const color = this.habit()!.color;
+    return {
+      'bg-red-400': color === 'red',
+      'bg-blue-400': color === 'blue',
+      'bg-green-400': color === 'green',
+      'bg-pink-400': color === 'pink',
+      'bg-yellow-400': color === 'yellow',
+      'bg-indigo-400': color === 'indigo',
+      'bg-slate-900': color === 'slate' || !color,
+      'bg-orange-400': color === 'orange',
+      'bg-lime-400': color === 'lime',
+      'bg-purple-400': color === 'purple',
+      'bg-zinc-400': color === 'zinc',
+      'bg-teal-400': color === 'teal',
+      'text-white': true,
+      'border-none': true,
+    };
+  });
   showDeleteConfirmation = false;
 
-  constructor(public elRef: ElementRef) {}
+  ngOnInit(): void {
+    this.habitCalendarStore.loadHabit(this.habitId());
+  }
 
   ngAfterViewInit(): void {
-    const today = new Date();
-    const todayDay = this.allDays.find(
-      d =>
-        d.day().getMonth() == today.getMonth() &&
-        d.day().getDate() === today.getDate()
+    const todayDay = this.allDays.find(day =>
+      DateUtils.compareDate(day.day(), new Date())
     );
     if (todayDay) {
       const offset =
@@ -191,12 +224,7 @@ export class HabitCalendarComponent implements AfterViewInit {
     }
 
     return this.days().some(d => {
-      return (
-        d.date.getFullYear() === date.getFullYear() &&
-        d.date.getMonth() === date.getMonth() &&
-        d.date.getDate() === date.getDate() &&
-        d.completed
-      );
+      return DateUtils.compareDate(d.date, date), d.completed;
     });
   }
 
@@ -209,29 +237,48 @@ export class HabitCalendarComponent implements AfterViewInit {
     );
   }
 
-  colorClass() {
-    return {
-      'bg-red-400': this.habit().color === 'red',
-      'bg-blue-400': this.habit().color === 'blue',
-      'bg-green-400': this.habit().color === 'green',
-      'bg-pink-400': this.habit().color === 'pink',
-      'bg-yellow-400': this.habit().color === 'yellow',
-      'bg-indigo-400': this.habit().color === 'indigo',
-      'bg-slate-900': this.habit().color === 'slate' || !this.habit().color,
-      'bg-orange-400': this.habit().color === 'orange',
-      'bg-lime-400': this.habit().color === 'lime',
-      'bg-purple-400': this.habit().color === 'purple',
-      'bg-zinc-400': this.habit().color === 'zinc',
-      'bg-teal-400': this.habit().color === 'teal',
-      'text-white': true,
-      'border-none': true,
-    };
-  }
-
   onExpand() {
     if (this.showDeleteConfirmation) {
       return;
     }
     this.expand.emit();
+  }
+
+  toggleToday() {
+    this.toggleDay(new Date());
+  }
+
+  toggleDay(date: Date) {
+    const day = this.habit()!.days.find(day =>
+      DateUtils.compareDate(day.date, date)
+    );
+    if (day) {
+      this.habitCalendarStore.deleteDay(day.id!);
+    } else {
+      this.habitCalendarStore.addDay(date);
+    }
+  }
+
+  colorClass() {
+    return {
+      'bg-red-400': this.habit()!.color === 'red',
+      'bg-blue-400': this.habit()!.color === 'blue',
+      'bg-green-400': this.habit()!.color === 'green',
+      'bg-pink-400': this.habit()!.color === 'pink',
+      'bg-yellow-400': this.habit()!.color === 'yellow',
+      'bg-indigo-400': this.habit()!.color === 'indigo',
+      'bg-slate-900': this.habit()!.color === 'slate' || !this.habit()!.color,
+      'bg-orange-400': this.habit()!.color === 'orange',
+      'bg-lime-400': this.habit()!.color === 'lime',
+      'bg-purple-400': this.habit()!.color === 'purple',
+      'bg-zinc-400': this.habit()!.color === 'zinc',
+      'bg-teal-400': this.habit()!.color === 'teal',
+      'text-white': true,
+      'border-none': true,
+    };
+  }
+
+  updateYear(value: number) {
+    this.habitCalendarStore.changeYear(value);
   }
 }
